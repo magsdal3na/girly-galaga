@@ -5,14 +5,17 @@ extends CharacterBody2D
 @export var acceleration = 600.0
 @export var drag_factor = 2.0
 
+@onready var star_label = %StarCounter
+
 var rotation_direction = 0
+
+var star_counter = 0
 
 func _ready() -> void:
 	motion_mode = CharacterBody2D.MOTION_MODE_FLOATING
 
 func get_input():
 	rotation_direction = Input.get_axis("move_left", "move_right")
-	#velocity = transform.x * Input.get_axis("move_down", "move_up") * speed
 	
 func _physics_process(delta: float) -> void:
 	get_input()
@@ -29,9 +32,6 @@ func _physics_process(delta: float) -> void:
 	
 	#gets input direction
 	var input_vector := Vector2.ZERO
-	#input_vector.x = Input.get_axis("move_left", "move_right")
-	#input_vector.y = Input.get_axis("move_up", "move_down")
-	#input_vector = input_vector.normalized()
 	
 	#applies acceleration if pushing buttons
 	if input_vector != Vector2.ZERO:
@@ -43,3 +43,13 @@ func _physics_process(delta: float) -> void:
 	velocity = velocity.lerp(Vector2.ZERO, drag_factor * delta)
 	
 	move_and_slide()
+	
+func _on_area_2d_area_entered(area: Area2D) -> void:
+	if area.is_in_group("collectible-stars"):
+		set_count(star_counter + 1)
+		print(star_counter)
+	
+func set_count(new_star_count: int) -> void:
+	star_counter = new_star_count
+	star_label.text = "Stars: " + str(star_counter)
+	
