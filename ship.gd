@@ -51,5 +51,5 @@ func _on_area_2d_area_entered(area: Area2D) -> void:
 	
 func set_count(new_star_count: int) -> void:
 	star_counter = new_star_count
-	star_label.text = "Stars: " + str(star_counter)
+	star_label.text = str(star_counter)
 	
