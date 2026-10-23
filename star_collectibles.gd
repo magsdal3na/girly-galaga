@@ -13,7 +13,7 @@ func scatter_items() -> void:
 		push_error("Collectible scene is missing!")
 		return
 		
-	for i in range(spawn_count):
+	for i in range(spawn_count - 1):
 		#generates a random X and Y coordinate w/in the size
 		var random_x = randf_range(0, spawn_area_size.x)
 		var random_y = randf_range(0, spawn_area_size.y)
@@ -26,7 +26,3 @@ func scatter_items() -> void:
 		
 		#add to the tree
 		add_child(item)
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
