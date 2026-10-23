@@ -1,6 +1,5 @@
 extends Area2D
 
-
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	$AnimatedSprite2D.play("blue_stars")
@@ -13,5 +12,11 @@ func _process(delta: float) -> void:
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.name == "ship" or body.is_in_group("ship"):
+		$AnimatedSprite2D.hide()
+		$CollisionShape2D.set_deferred("disabled", true)
+		$StarCollectSound.play()
+		
+		await $StarCollectSound.finished
 		queue_free()
+		
 		
